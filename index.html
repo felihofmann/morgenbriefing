@@ -2,9 +2,9 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Morgenbriefing &middot; 22. Juli 2026</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2032%2032%27%3E%3Ccircle%20cx%3D%2716%27%20cy%3D%2716%27%20r%3D%277%27%20fill%3D%27%2523151D5C%27/%3E%3Cg%20stroke%3D%27%2523151D5C%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%3E%3Cline%20x1%3D%2716%27%20y1%3D%272%27%20x2%3D%2716%27%20y2%3D%276%27/%3E%3Cline%20x1%3D%2716%27%20y1%3D%2726%27%20x2%3D%2716%27%20y2%3D%2730%27/%3E%3Cline%20x1%3D%272%27%20y1%3D%2716%27%20x2%3D%276%27%20y2%3D%2716%27/%3E%3Cline%20x1%3D%2726%27%20y1%3D%2716%27%20x2%3D%2730%27%20y2%3D%2716%27/%3E%3Cline%20x1%3D%275.5%27%20y1%3D%275.5%27%20x2%3D%278.3%27%20y2%3D%278.3%27/%3E%3Cline%20x1%3D%2723.7%27%20y1%3D%2723.7%27%20x2%3D%2726.5%27%20y2%3D%2726.5%27/%3E%3Cline%20x1%3D%275.5%27%20y1%3D%2726.5%27%20x2%3D%278.3%27%20y2%3D%2723.7%27/%3E%3Cline%20x1%3D%2723.7%27%20y1%3D%278.3%27%20x2%3D%2726.5%27%20y2%3D%275.5%27/%3E%3C/g%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morgenbriefing — Mittwoch, 22. Juli 2026</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='7' fill='%23151D5C'/%3E%3Cg stroke='%23151D5C' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='16' y1='26' x2='16' y2='30'/%3E%3Cline x1='2' y1='16' x2='6' y2='16'/%3E%3Cline x1='26' y1='16' x2='30' y2='16'/%3E%3Cline x1='6.3' y1='6.3' x2='9.1' y2='9.1'/%3E%3Cline x1='22.9' y1='22.9' x2='25.7' y2='25.7'/%3E%3Cline x1='6.3' y1='25.7' x2='9.1' y2='22.9'/%3E%3Cline x1='22.9' y1='9.1' x2='25.7' y2='6.3'/%3E%3C/g%3E%3C/svg%3E">
 <style>
 @font-face {
   font-family: 'Fraunces';
@@ -43,8 +43,9 @@ html, body {
   margin: 0;
   padding: 0;
   background: #FCFCFB;
-  font-family: 'Lexend Deca', sans-serif;
   color: #2E2C27;
+  font-family: 'Lexend Deca', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .band {
@@ -66,11 +67,9 @@ html, body {
   padding: 56px 24px;
 }
 
-.logo {
-  display: block;
-  width: 110px;
-  height: auto;
-  margin-bottom: 24px;
+.band-bottom .wrap {
+  padding-top: 48px;
+  padding-bottom: 64px;
 }
 
 .day-date {
@@ -78,18 +77,17 @@ html, body {
   font-weight: 400;
   font-size: 14px;
   color: #6B6A63;
-  letter-spacing: 0.02em;
-  margin: 0 0 14px 0;
+  margin: 0 0 18px 0;
 }
 
 .headline {
   font-family: 'Fraunces', serif;
   font-weight: 600;
+  font-style: normal;
   font-size: 40px;
   line-height: 1.25;
   color: #2E2C27;
   margin: 0 0 14px 0;
-  max-width: 720px;
 }
 
 .quote-attr {
@@ -101,152 +99,71 @@ html, body {
 }
 
 .drawing {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
-  margin-bottom: 28px;
+  margin-bottom: 8px;
 }
 
 .acts {
   display: flex;
-  width: 100%;
+  margin-top: 28px;
 }
 
 .act {
-  flex: 1 1 0;
+  flex: 1;
   padding: 0 28px;
-  position: relative;
+  border-left: 1px solid #E4E3DC;
 }
 
-.act:first-child { padding-left: 0; }
-.act:last-child { padding-right: 0; }
+.act:first-child {
+  padding-left: 0;
+  border-left: none;
+}
 
-.act + .act::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 4px;
-  bottom: 4px;
-  width: 1px;
-  background: #E4E3DC;
+.act:last-child {
+  padding-right: 0;
 }
 
 .act-time {
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 600;
   font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   color: #2E2C27;
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
 }
 
 .act-sentence {
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 400;
-  font-size: 14.5px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.5;
   color: #6B6A63;
   margin: 0;
 }
 
-.section {
-  margin-bottom: 44px;
-}
-
-.section:last-child { margin-bottom: 0; }
-
-.section-heading {
-  font-family: 'Lexend Deca', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.02em;
-  color: #2E2C27;
-  margin: 0 0 20px 0;
-}
-
-.item {
-  display: flex;
-  gap: 16px;
-  padding: 18px 0;
-  border-top: 1px solid #E4E3DC;
-}
-
-.item-num {
-  font-family: 'Lexend Deca', sans-serif;
-  font-weight: 500;
-  font-size: 13px;
-  color: #B4B3A8;
-  flex: 0 0 20px;
-  padding-top: 2px;
-}
-
-.item-body { flex: 1 1 auto; }
-
-.item-title {
-  font-family: 'Lexend Deca', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  color: #2E2C27;
-  margin: 0 0 6px 0;
-}
-
-.item-title a {
-  color: #2E2C27;
-  text-decoration: underline;
-  text-decoration-color: #6B6A63;
-  text-underline-offset: 2px;
-}
-
-.item-sentence {
+.calm-line {
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 400;
-  font-size: 14.5px;
+  font-size: 16px;
   line-height: 1.6;
   color: #6B6A63;
   margin: 0;
 }
 
-.item-sentence .src {
-  text-decoration: underline;
-  text-decoration-color: #6B6A63;
-  text-underline-offset: 2px;
-}
-
-.item-btn {
-  display: inline-block;
-  margin-top: 12px;
-  background: #151D5C;
-  color: #FCFCFB;
-  font-family: 'Lexend Deca', sans-serif;
-  font-weight: 500;
-  font-size: 13px;
-  text-decoration: none;
-  padding: 9px 16px;
-  border-radius: 8px;
-  border: 1px solid #151D5C;
-}
-
-.item-btn:hover {
-  background: #0E1140;
-  border-color: #0E1140;
-}
-
 @media (max-width: 640px) {
   .headline { font-size: 30px; }
   .acts { flex-direction: column; }
-  .act { padding: 0; margin-bottom: 22px; }
-  .act:last-child { margin-bottom: 0; }
-  .act + .act::before {
-    content: "";
-    position: static;
-    display: block;
-    width: 100%;
-    height: 1px;
-    background: #E4E3DC;
-    margin-bottom: 22px;
+  .act {
+    padding: 18px 0;
+    border-left: none;
+    border-top: 1px solid #E4E3DC;
   }
-  .wrap { padding: 40px 20px; }
+  .act:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
 }
 </style>
 </head>
@@ -254,38 +171,41 @@ html, body {
 
 <div class="band band-top">
   <div class="wrap">
-    <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABNYAAAGHCAYAAAB8n99KAAAACXBIWXMAAAsTAAALEwEAmpwYAAAGkmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgOS4xLWMwMDMgNzkuOTY5MGE4N2ZjLCAyMDI1LzAzLzA2LTIwOjUwOjE2ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjcuMSAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjYtMDItMDVUMTA6MTk6MTQrMDE6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDI2LTAzLTE4VDEyOjA4OjEyKzAxOjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDI2LTAzLTE4VDEyOjA4OjEyKzAxOjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDowZjk3ZGU2Zi00NjY2LTQ4ZjgtOWZhNy01YzU2NzM1ZTRiNWIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Zjc2NWUzNDMtYjdiYy00MWE1LWI3YzQtYjRkOTg5M2M3YjRlIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6Zjc2NWUzNDMtYjdiYy00MWE1LWI3YzQtYjRkOTg5M2M3YjRlIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpmNzY1ZTM0My1iN2JjLTQxYTUtYjdjNC1iNGQ5ODkzYzdiNGUiIHN0RXZ0OndoZW49IjIwMjYtMDItMDVUMTA6MTk6MTQrMDE6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyNy4xIChNYWNpbnRvc2gpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpkNDcxZjNmNS03ZDMyLTRkNTctYjMzOC1iOWFlY2E0NzE5YzAiIHN0RXZ0OndoZW49IjIwMjYtMDItMDVUMTA6NTM6MDkrMDE6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyNy4xIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDowZjk3ZGU2Zi00NjY2LTQ4ZjgtOWZhNy01YzU2NzM1ZTRiNWIiIHN0RXZ0OndoZW49IjIwMjYtMDMtMThUMTI6MDg6MTIrMDE6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyNy4xIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkErhc4AAA/aSURBVHic7d3RcdTmGsfhN4zv7atcBncQd4BPBZACMiwVHHfAng6gAsykgDgV4HRg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" alt="FELI" width="1238" height="391">
     <p class="day-date">Mittwoch &middot; 22. Juli 2026</p>
-    <h1 class="headline">&bdquo;The first lesson of branding: memorability. It&rsquo;s very difficult buying something you can&rsquo;t remember.&ldquo;</h1>
-    <p class="quote-attr">&mdash; Sir John Hegarty</p>
+    <h1 class="headline">&bdquo;Es geht auch bei Kreativen aus meiner pers&ouml;nlichen Sicht nicht um die Anzahl von Jahren, sondern um das K&ouml;nnen und die kreative Kraft und Energie, die eine Person hat &ndash; unabh&auml;ngig vom Alter.&ldquo;</h1>
+    <p class="quote-attr">&mdash; D&ouml;rte Spengler-Ahrens</p>
 
     <svg class="drawing" viewBox="0 0 840 170" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,112 C90,109 190,115 280,111 C370,108 480,114 560,110 C650,107 760,113 840,109"
+      <path d="M0,128 C60,124 120,132 180,127 C240,122 300,130 360,126 C420,121 480,129 540,125 C570,120 590,104 615,97 C630,92 640,92 652,98 C668,106 684,120 708,132 C748,140 792,142 840,140"
             fill="none" stroke="#2E2C27" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="632" cy="90" r="9" fill="#2E2C27"/>
       <g>
-        <circle cx="140" cy="58" r="7" fill="#151D5C"/>
+        <circle cx="420" cy="66" r="13" fill="none" stroke="#151D5C" stroke-width="2"/>
         <g stroke="#151D5C" stroke-width="2" stroke-linecap="round">
-          <line x1="140" y1="40" x2="140" y2="34"/>
-          <line x1="158" y1="58" x2="164" y2="58"/>
-          <line x1="122" y1="58" x2="116" y2="58"/>
-          <line x1="152.7" y1="46.3" x2="157" y2="42"/>
-          <line x1="127.3" y1="46.3" x2="123" y2="42"/>
+          <line x1="420" y1="40" x2="420" y2="48"/>
+          <line x1="420" y1="84" x2="420" y2="92"/>
+          <line x1="394" y1="66" x2="402" y2="66"/>
+          <line x1="438" y1="66" x2="446" y2="66"/>
+          <line x1="402" y1="48" x2="407.5" y2="53.5"/>
+          <line x1="432.5" y1="78.5" x2="438" y2="84"/>
+          <line x1="402" y1="84" x2="407.5" y2="78.5"/>
+          <line x1="432.5" y1="53.5" x2="438" y2="48"/>
         </g>
       </g>
     </svg>
 
     <div class="acts">
       <div class="act">
-        <div class="act-time">8&ndash;13 Uhr</div>
-        <p class="act-sentence">Der Kalender bleibt komplett leer &ndash; ruhiger Start ohne einen einzigen Termin.</p>
+        <p class="act-time">09 &ndash; 13 UHR</p>
+        <p class="act-sentence">Der Vormittag bleibt frei &ndash; kein Termin zwingt dich aus dem Flow.</p>
       </div>
       <div class="act">
-        <div class="act-time">13&ndash;18 Uhr</div>
-        <p class="act-sentence">Auch der Nachmittag bleibt frei, nichts unterbricht ihn.</p>
+        <p class="act-time">13 &ndash; 17 UHR</p>
+        <p class="act-sentence">Auch der Nachmittag ist offen, bis das Briefing beginnt.</p>
       </div>
       <div class="act">
-        <div class="act-time">Ab 18 Uhr</div>
-        <p class="act-sentence">Der Abend f&uuml;hrt in den kurzen Buchhaltungs-Block morgen fr&uuml;h um 9 Uhr.</p>
+        <p class="act-time">AB 17 UHR</p>
+        <p class="act-sentence">Eine Stunde mit Uli Eberle von BASE Eyewear &ndash; danach geh&ouml;rt dir der Abend.</p>
       </div>
     </div>
   </div>
@@ -293,41 +213,7 @@ html, body {
 
 <div class="band band-bottom">
   <div class="wrap">
-
-    <div class="section">
-      <h2 class="section-heading">Braucht dich</h2>
-
-      <div class="item">
-        <div class="item-num">1</div>
-        <div class="item-body">
-          <p class="item-title"><a href="https://mail.google.com/mail/u/0/#all/19f7f61b7b724912" target="_blank" rel="noopener">Rebecca wartet auf neuen Terminvorschlag</a></p>
-          <p class="item-sentence">Sie schreibt <span class="src">in einer E-Mail</span>: &bdquo;Aber wie sieht es bei dir n&auml;chste Woche aus?&ldquo; &ndash; Donnerstag passt ihr doch nicht mehr.</p>
-          <a class="item-btn" href="https://claude.ai/new?q=Entwirf%20eine%20Antwort%20an%20Rebecca%20vom%20Kinderyogaverband%20Schweiz%20zu%20einem%20neuen%20Terminvorschlag.%20Sie%20hat%20am%2021.%20Juli%20in%20einer%20E-Mail%20geschrieben%3A%20%E2%80%9EDonnerstag%20kann%20ich%20leider%20erst%20am%20Nachmittag%20und%20dann%20habe%20ich%20auch%20etwas%20zu%20wenig%20Zeit.%20Aber%20wie%20sieht%20es%20bei%20dir%20n%C3%A4chste%20Woche%20aus%3F%E2%80%9C%20Feli%20hatte%20ihr%20zuvor%20Donnerstag%20oder%20Freitag%20Vormittag%20vorgeschlagen%3B%20er%20schuldet%20ihr%20jetzt%20einen%20neuen%20Terminvorschlag%20f%C3%BCr%20n%C3%A4chste%20Woche.%20Du%20hast%20Zugriff%20auf%20Gmail%20und%20das%20Web.%20Schlage%20zwei%20bis%20drei%20konkrete%20Termine%20f%C3%BCr%20n%C3%A4chste%20Woche%20vor%20und%20formuliere%20daraus%20einen%20fertigen%20Antwortentwurf.&surface=cowork">Antwort an Rebecca entwerfen</a>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-num">2</div>
-        <div class="item-body">
-          <p class="item-title"><a href="https://mail.google.com/mail/u/0/#all/19f84e026984b79e" target="_blank" rel="noopener">Kostenvoranschlag f&uuml;r OG3 vorbereiten</a></p>
-          <p class="item-sentence">Uli Eberle bittet <span class="src">in einer E-Mail</span> um einen Kostenvoranschlag zum freigegebenen OG3-Kreativbriefing, den du ihm noch schuldest.</p>
-          <a class="item-btn" href="https://claude.ai/new?q=Bereite%20die%20Eckpunkte%20f%C3%BCr%20einen%20Kostenvoranschlag%20zum%20OG3-Kreativbriefing%20vor.%20Uli%20Eberle%20schrieb%20in%20einer%20E-Mail%3A%20%E2%80%9EIch%20schicke%20es%20dir%20vorab%20und%20w%C3%BCrde%20mich%20freuen%2C%20wenn%20wir%20es%20gemeinsam%20durchgehen%20k%C3%B6nnten.%20Dann%20w%C3%BCrde%20ich%20dich%20um%20einen%20Kostenvoranschlag%20bitten.%E2%80%9C%20Feli%20hat%20ihm%20bisher%20nur%20einen%20Termin%20vorgeschlagen%2C%20den%20Kostenvoranschlag%20aber%20noch%20nicht%20geliefert.%20Du%20hast%20Zugriff%20auf%20Gmail%2C%20Notion%20und%20das%20Web%2C%20um%20fr%C3%BChere%20OG3-Projektunterlagen%20als%20Referenz%20zu%20nutzen.%20Skizziere%20Leistungsposten%20und%20eine%20grobe%20Kostenspanne%20als%20Ausgangspunkt%20f%C3%BCr%20ein%20Angebot.&surface=cowork">Kostenvoranschlag skizzieren</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2 class="section-heading">Erledigt</h2>
-
-      <div class="item">
-        <div class="item-num">1</div>
-        <div class="item-body">
-          <p class="item-title">CREEN-R&uuml;ckfragen zur BASE-Seite beantwortet</p>
-          <p class="item-sentence">Uli Eberle hat die Fragen der neuen Agentur weitergeleitet, du hast noch am selben Tag mit dem Aufbau pro Seitentyp geantwortet.</p>
-        </div>
-      </div>
-    </div>
-
+    <p class="calm-line">Heute Morgen braucht dich nichts.</p>
   </div>
 </div>
 
