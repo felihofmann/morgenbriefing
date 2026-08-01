@@ -71,7 +71,14 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 .cal-note{padding-top:12px;font-size:14px;color:var(--ink-muted);}
 .todo-row{display:flex;gap:12px;padding:10px 0;font-size:16px;align-items:flex-start;}
 .todo-row + .todo-row{border-top:1px solid var(--accent-faint);}
-.todo-check{width:18px;height:18px;border:1.5px solid var(--accent);border-radius:5px;flex-shrink:0;margin-top:3px;}
+.todo-check{width:18px;height:18px;border:1.5px solid var(--accent);border-radius:5px;flex-shrink:0;margin-top:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:transparent;padding:0;transition:background .15s ease,border-color .15s ease;-webkit-tap-highlight-color:transparent;}
+.todo-check:hover{background:var(--accent-faint);}
+.todo-check:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.todo-check svg{width:11px;height:11px;opacity:0;transition:opacity .15s ease;}
+.todo-row.done .todo-check{background:var(--accent);border-color:var(--accent);}
+.todo-row.done .todo-check svg{opacity:1;}
+.todo-text{transition:color .15s ease;}
+.todo-row.done .todo-text{text-decoration:line-through;text-decoration-thickness:1px;color:var(--ink-muted);}
 .todo-source{display:block;font-size:13px;color:var(--ink-muted);margin-top:2px;}
 @media (max-width:640px){
   .grid-2{grid-template-columns:1fr;}
@@ -175,14 +182,43 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
       To-do
     </div>
     <div class="todo-row">
-      <div class="todo-check"></div>
+      <button class="todo-check" type="button" role="checkbox" aria-checked="false" aria-label="Aufgabe abhaken">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
       <div>
-        Neue Tagline in die Animal-Control-Layouts einpflegen und Formate f&uuml;r YouTube- und Facebook-Header erstellen.
+        <span class="todo-text">Neue Tagline in die Animal-Control-Layouts einpflegen und Formate f&uuml;r YouTube- und Facebook-Header erstellen.</span>
         <span class="todo-source">Wie in der Mail an Paramount zugesagt &ndash; ausstehend seit gestern</span>
       </div>
     </div>
   </div>
 
 </div>
+
+<script>
+(function () {
+  var dateEl = document.querySelector('.day-date');
+  var key = 'mb-todo-' + (dateEl ? dateEl.textContent.trim() : 'default');
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) { state = {}; }
+
+  document.querySelectorAll('.todo-row').forEach(function (row, i) {
+    var box = row.querySelector('.todo-check');
+    if (!box) return;
+
+    if (state[i]) {
+      row.classList.add('done');
+      box.setAttribute('aria-checked', 'true');
+    }
+
+    box.addEventListener('click', function () {
+      var done = row.classList.toggle('done');
+      box.setAttribute('aria-checked', done ? 'true' : 'false');
+      state[i] = done;
+      try { localStorage.setItem(key, JSON.stringify(state)); } catch (e) {}
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
