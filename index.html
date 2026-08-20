@@ -21,6 +21,7 @@
   --ink-muted:#6B6A80;
   --personal:#D3D2DE;
   --tooltip:#2E2D33;
+  --sep:#9A99A8;
 }
 *{box-sizing:border-box;}
 body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;color:var(--primary);}
@@ -42,8 +43,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 .band-seg{position:absolute;top:0;bottom:0;min-width:10px;border-radius:0;display:flex;align-items:center;padding:0 11px;overflow:hidden;cursor:default;outline:none;}
 .band-seg.r-l{border-top-left-radius:12px;border-bottom-left-radius:12px;}
 .band-seg.r-r{border-top-right-radius:12px;border-bottom-right-radius:12px;}
-.band-seg.sep{box-shadow:inset 1.5px 0 0 #FFFFFF;}
-.band-seg.sep.seg-personal{box-shadow:inset 1.5px 0 0 var(--primary-faint);}
+.band-seg.sep{box-shadow:inset 1px 0 0 var(--sep);}
 .band-seg::after{content:"";position:absolute;top:-6px;bottom:-6px;left:-2px;right:-2px;}
 .band-seg:focus-visible{box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px var(--accent);}
 .band-seg span{font-family:'Abhaya Libre',Georgia,serif;font-size:15px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -143,9 +143,9 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
       <div class="band-seg seg-focus r-l" style="left:8.3333%;width:4.1667%" tabindex="0" data-time="9 – 9:30 Uhr" data-kind="Fokuszeit" data-title="BLOCK Buchhaltung" aria-label="9 bis 9:30 Uhr, Fokuszeit, BLOCK Buchhaltung"></div>
       <div class="band-seg seg-meeting sep" style="left:12.5000%;width:12.5000%" tabindex="0" data-time="9:30 – 11 Uhr" data-kind="Meeting" data-title="Status Schafe und Co." aria-label="9:30 bis 11 Uhr, Meeting, Status Schafe und Co."><span>Status Schafe und Co.</span></div>
       <div class="band-seg seg-focus sep" style="left:25.0000%;width:8.3333%" tabindex="0" data-time="11 – 12 Uhr" data-kind="Fokuszeit" data-title="Check: YSEE Webseite in Figma" aria-label="11 bis 12 Uhr, Fokuszeit, Check: YSEE Webseite in Figma"></div>
-      <div class="band-seg seg-focus sep r-r" style="left:33.3333%;width:8.3333%" tabindex="0" data-time="12 – 13 Uhr" data-kind="Fokuszeit" data-title="Kinderyoga Post(s)" aria-label="12 bis 13 Uhr, Fokuszeit, Kinderyoga Post(s)"></div>
-      <div class="band-seg seg-personal r-l r-r" style="left:47.9167%;width:6.2500%" tabindex="0" data-time="13:45 – 14:30 Uhr" data-kind="Persönlich" data-title="Feli Frisör" aria-label="13:45 bis 14:30 Uhr, Persönlich, Feli Frisör"></div>
-      <div class="band-seg seg-focus r-l r-r" style="left:58.3333%;width:25.0000%" tabindex="0" data-time="15 – 18 Uhr" data-kind="Fokuszeit" data-title="IBB Webseite aufsetzen" aria-label="15 bis 18 Uhr, Fokuszeit, IBB Webseite aufsetzen"><span>IBB Webseite aufsetzen</span></div>
+      <div class="band-seg seg-focus sep" style="left:33.3333%;width:8.3333%" tabindex="0" data-time="12 – 13 Uhr" data-kind="Fokuszeit" data-title="Kinderyoga Post(s)" aria-label="12 bis 13 Uhr, Fokuszeit, Kinderyoga Post(s)"></div>
+      <div class="band-seg seg-personal" style="left:47.9167%;width:6.2500%" tabindex="0" data-time="13:45 – 14:30 Uhr" data-kind="Persönlich" data-title="Feli Frisör" aria-label="13:45 bis 14:30 Uhr, Persönlich, Feli Frisör"></div>
+      <div class="band-seg seg-focus r-r" style="left:58.3333%;width:25.0000%" tabindex="0" data-time="15 – 18 Uhr" data-kind="Fokuszeit" data-title="IBB Webseite aufsetzen" aria-label="15 bis 18 Uhr, Fokuszeit, IBB Webseite aufsetzen"><span>IBB Webseite aufsetzen</span></div>
     </div>
     <div class="band-tip" role="tooltip" aria-hidden="true"></div>
     <div class="band-legend">
@@ -169,7 +169,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
             <line x1="9.5" y1="38.5" x2="13" y2="35"/><line x1="35" y1="13" x2="38.5" y2="9.5"/>
           </g>
         </svg>
-        Wetter
+        Wetter · Berlin
       </div>
       <div class="weather-number">25°</div>
       <div class="weather-sub">Bewölkt, bis 25°C, 15% Regenwahrscheinlichkeit</div>
