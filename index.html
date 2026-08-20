@@ -19,6 +19,7 @@
   --accent-faint:#FF3A6B22;
   --bg:#FFFFFF;
   --ink-muted:#6B6A80;
+  --personal:#D3D2DE;
 }
 *{box-sizing:border-box;}
 body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;color:var(--primary);}
@@ -30,8 +31,27 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 .quote-mark{font-family:'Cal Sans',-apple-system,sans-serif;color:var(--accent);font-size:40px;line-height:1;margin:0 0 6px 0;}
 .quote-text{font-family:'Abhaya Libre',Georgia,serif;font-weight:500;color:#FFFFFF;font-size:21px;line-height:1.5;margin:0 0 14px 0;}
 .quote-attr{font-family:'Cal Sans',-apple-system,sans-serif;color:var(--accent);font-size:13px;letter-spacing:.02em;margin:0;}
-.day-shape{margin:20px 4px 24px;}
-.day-shape-svg{display:block;width:100%;height:auto;}
+.day-band{margin:24px 4px 26px;}
+.band-hours{position:relative;height:16px;margin-bottom:5px;}
+.band-hour{position:absolute;transform:translateX(-50%);font-family:'Cal Sans',-apple-system,sans-serif;font-size:11px;color:var(--ink-muted);white-space:nowrap;}
+.band-hour:first-child{transform:none;}
+.band-hour:last-child{transform:translateX(-100%);}
+.band-track{position:relative;height:42px;border-radius:12px;background:var(--primary-faint);overflow:hidden;}
+.band-tick{position:absolute;top:0;bottom:0;width:1px;background:#FFFFFF;opacity:.6;}
+.band-seg{position:absolute;top:0;bottom:0;border-radius:12px;display:flex;align-items:center;padding:0 11px;overflow:hidden;}
+.band-seg span{font-family:'Abhaya Libre',Georgia,serif;font-size:15px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.seg-meeting{background:var(--accent);}
+.seg-meeting span{color:#FFFFFF;}
+.seg-focus{background:var(--primary);}
+.seg-focus span{color:#FFFFFF;}
+.seg-personal{background:var(--personal);}
+.seg-personal span{color:var(--primary);}
+.seg-free{background:var(--primary-faint);}
+.band-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Abhaya Libre',Georgia,serif;font-size:15px;color:var(--ink-muted);}
+.band-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-family:'Cal Sans',-apple-system,sans-serif;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted);}
+.band-legend span{display:flex;align-items:center;gap:6px;}
+.band-legend i{width:10px;height:10px;border-radius:3px;display:block;flex-shrink:0;}
+.day-stats{margin-top:9px;font-family:'Abhaya Libre',Georgia,serif;font-size:15px;color:var(--ink-muted);}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
 .tile{border-radius:20px;padding:24px 26px;background:#FFFFFF;}
 .tile-pink{border:1.5px solid var(--accent);}
@@ -44,9 +64,10 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 .tile-body-muted{font-family:'Abhaya Libre',Georgia,serif;font-size:15px;color:var(--ink-muted);line-height:1.5;}
 .list-tile{margin-bottom:16px;}
 .list-tile:last-child{margin-bottom:0;}
-.cal-row{display:flex;gap:18px;align-items:baseline;padding:10px 0;font-size:16px;}
+.cal-row{display:flex;gap:14px;align-items:baseline;padding:10px 0;font-size:16px;}
 .cal-row + .cal-row{border-top:1px solid var(--primary-faint);}
 .cal-time{color:var(--ink-muted);font-size:14px;min-width:104px;flex-shrink:0;}
+.cal-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;align-self:center;margin-right:-4px;}
 .cal-note{padding-top:12px;font-size:14px;color:var(--ink-muted);}
 .todo-row{display:flex;gap:12px;padding:10px 0;font-size:16px;align-items:flex-start;}
 .todo-row + .todo-row{border-top:1px solid var(--accent-faint);}
@@ -63,6 +84,11 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
   .grid-2{grid-template-columns:1fr;}
   .quote-text{font-size:19px;}
   .page{padding:36px 18px 48px;}
+  .band-seg{padding:0 7px;}
+  .band-seg span{font-size:13px;}
+  .band-hour{font-size:10px;}
+  .band-legend{gap:12px;}
+  .cal-time{min-width:92px;}
 }
 </style>
 </head>
@@ -80,18 +106,43 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
     <p class="quote-attr">— Sebastian Turner</p>
   </div>
 
-  <div class="day-shape">
-    <svg class="day-shape-svg" viewBox="0 0 840 170" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,145 C50,145 247.5,150.8 300,145 C352.5,139.2 309.7,120 315,110 C320.3,100 320.3,87.5 332,85 C343.7,82.5 370.3,93.3 385,95 C399.7,96.7 408.3,90.8 420,95 C431.7,99.2 444.8,118.3 455,120 C465.2,121.7 472.3,104.2 481,105 C489.7,105.8 499.7,127.5 507,125 C514.3,122.5 504.5,100.8 525,90 C545.5,79.2 600.8,58.3 630,60 C659.2,61.7 665,85.8 700,100 C735,114.2 816.7,137.5 840,145" fill="none" stroke="#251E61" stroke-width="3" stroke-linecap="round"/>
-      <path d="M400,152 Q480,108 560,152" fill="none" stroke="#FF3A6B" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
-      <circle cx="315" cy="110" r="7" fill="#251E61"/>
-      <circle cx="332" cy="85" r="11" fill="#251E61"/>
-      <circle cx="385" cy="95" r="9" fill="#251E61"/>
-      <circle cx="420" cy="95" r="9" fill="#251E61"/>
-      <circle cx="481" cy="105" r="8" fill="#251E61"/>
-      <circle cx="630" cy="60" r="13" fill="#251E61"/>
-    </svg>
+  <div class="day-band">
+  <div class="band-hours">
+    <div class="band-hour" style="left:0.0000%">8</div>
+    <div class="band-hour" style="left:16.6667%">10</div>
+    <div class="band-hour" style="left:33.3333%">12</div>
+    <div class="band-hour" style="left:50.0000%">14</div>
+    <div class="band-hour" style="left:66.6667%">16</div>
+    <div class="band-hour" style="left:83.3333%">18</div>
+    <div class="band-hour" style="left:100.0000%">20</div>
   </div>
+  <div class="band-track">
+    <div class="band-tick" style="left:8.3333%"></div>
+    <div class="band-tick" style="left:16.6667%"></div>
+    <div class="band-tick" style="left:25.0000%"></div>
+    <div class="band-tick" style="left:33.3333%"></div>
+    <div class="band-tick" style="left:41.6667%"></div>
+    <div class="band-tick" style="left:50.0000%"></div>
+    <div class="band-tick" style="left:58.3333%"></div>
+    <div class="band-tick" style="left:66.6667%"></div>
+    <div class="band-tick" style="left:75.0000%"></div>
+    <div class="band-tick" style="left:83.3333%"></div>
+    <div class="band-tick" style="left:91.6667%"></div>
+    <div class="band-seg seg-focus" style="left:8.3333%;width:4.1667%" title="9 – 9:30 Uhr · Fokuszeit · BLOCK Buchhaltung"></div>
+    <div class="band-seg seg-meeting" style="left:12.5000%;width:12.5000%" title="9:30 – 11 Uhr · Meeting · Status Schafe und Co."><span>Status Schafe und Co.</span></div>
+    <div class="band-seg seg-focus" style="left:25.0000%;width:8.3333%" title="11 – 12 Uhr · Fokuszeit · Check: YSEE Webseite in Figma"></div>
+    <div class="band-seg seg-focus" style="left:33.3333%;width:8.3333%" title="12 – 13 Uhr · Fokuszeit · Kinderyoga Post(s)"></div>
+    <div class="band-seg seg-personal" style="left:47.9167%;width:6.2500%" title="13:45 – 14:30 Uhr · Persönlich · Feli Frisör"></div>
+    <div class="band-seg seg-focus" style="left:58.3333%;width:25.0000%" title="15 – 18 Uhr · Fokuszeit · IBB Webseite aufsetzen"><span>IBB Webseite aufsetzen</span></div>
+  </div>
+  <div class="band-legend">
+    <span><i class="seg-meeting"></i>Meeting</span>
+    <span><i class="seg-focus"></i>Fokuszeit</span>
+    <span><i class="seg-personal"></i>Persönlich</span>
+    <span><i class="seg-free"></i>Frei</span>
+  </div>
+  <div class="day-stats">1 Meeting (1,5 h) · 5,5 h Fokuszeit · 45 min privat · ab 18 Uhr frei</div>
+</div>
 
   <div class="grid-2">
     <div class="tile tile-pink">
@@ -135,12 +186,12 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
       </svg>
       Termine
     </div>
-    <div class="cal-row"><span class="cal-time">9:00 – 9:30</span><span>BLOCK Buchhaltung</span></div>
-    <div class="cal-row"><span class="cal-time">9:30 – 11:00</span><span>Status Schafe und Co.</span></div>
-    <div class="cal-row"><span class="cal-time">11:00 – 12:00</span><span>Check: YSEE Webseite in Figma</span></div>
-    <div class="cal-row"><span class="cal-time">12:00 – 13:00</span><span>Kinderyoga Post(s)</span></div>
-    <div class="cal-row"><span class="cal-time">13:45 – 14:30</span><span>Feli Frisör</span></div>
-    <div class="cal-row"><span class="cal-time">15:00 – 18:00</span><span>IBB Webseite aufsetzen</span></div>
+    <div class="cal-row"><span class="cal-time">9:00 – 9:30</span><span class="cal-dot seg-focus"></span><span>BLOCK Buchhaltung</span></div>
+    <div class="cal-row"><span class="cal-time">9:30 – 11:00</span><span class="cal-dot seg-meeting"></span><span>Status Schafe und Co.</span></div>
+    <div class="cal-row"><span class="cal-time">11:00 – 12:00</span><span class="cal-dot seg-focus"></span><span>Check: YSEE Webseite in Figma</span></div>
+    <div class="cal-row"><span class="cal-time">12:00 – 13:00</span><span class="cal-dot seg-focus"></span><span>Kinderyoga Post(s)</span></div>
+    <div class="cal-row"><span class="cal-time">13:45 – 14:30</span><span class="cal-dot seg-personal"></span><span>Feli Frisör</span></div>
+    <div class="cal-row"><span class="cal-time">15:00 – 18:00</span><span class="cal-dot seg-focus"></span><span>IBB Webseite aufsetzen</span></div>
     <div class="cal-note">Ab 18 Uhr frei.</div>
   </div>
 
@@ -162,7 +213,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
       </button>
       <div>
         <span class="todo-text">PowerPoint-Präsentation für Gernot Fleischmanns NavVis-Bühnenauftritt (INTERGEO, 15.9.) vorbereiten – Präsentationsdatei fällig am 4. September</span>
-        <span class="todo-source">Zugesagt am 17.8. per Mail an Gernot Fleischmann · Betreff „NavVis Booth Theater Presentation @ INTERGEO 2026"</span>
+        <span class="todo-source">Zugesagt am 17.8. per Mail an Gernot Fleischmann · Betreff „NavVis Booth Theater Presentation @ INTERGEO 2026“</span>
       </div>
     </div>
   </div>
