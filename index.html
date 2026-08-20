@@ -62,6 +62,11 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 .band-tip::after{content:"";position:absolute;left:50%;bottom:100%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:var(--tooltip);}
 .band-tip b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;}
 .band-tip em{font-style:normal;font-family:'Cal Sans',-apple-system,sans-serif;font-size:11px;letter-spacing:.05em;text-transform:uppercase;opacity:.8;}
+.ort-select{font-family:'Cal Sans',-apple-system,sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background-color:transparent;border:0;margin:0 0 0 -2px;padding:2px 17px 2px 6px;cursor:pointer;appearance:none;-webkit-appearance:none;border-radius:5px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23FF3A6B' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 4px center;background-size:9px 6px;transition:background-color .15s ease;}
+.ort-select:hover{background-color:var(--accent-faint);}
+.ort-select:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+.ort-select option{color:var(--primary);text-transform:none;letter-spacing:normal;}
+.weather-number.laedt{color:var(--ink-muted);}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
 .tile{border-radius:20px;padding:24px 26px;background:#FFFFFF;}
 .tile-pink{border:1.5px solid var(--accent);}
@@ -167,7 +172,14 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
             <line x1="9.5" y1="38.5" x2="13" y2="35"/><line x1="35" y1="13" x2="38.5" y2="9.5"/>
           </g>
         </svg>
-        Wetter · Berlin
+        Wetter
+        <select class="ort-select" id="ort-select" aria-label="Ort für die Wettervorhersage">
+          <option value="52.5200,13.4050">Berlin</option>
+          <option value="52.9977,13.2513">Badingen, Zehdenick</option>
+          <option value="47.8095,13.0550">Salzburg, Österreich</option>
+          <option value="48.1374,11.5755">München</option>
+          <option value="47.3339,13.2989">Wagrain, Österreich</option>
+        </select>
       </div>
       <div class="weather-number">25°</div>
       <div class="weather-sub">Bewölkt, bis 25°C, 15% Regenwahrscheinlichkeit</div>
@@ -285,6 +297,80 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
     seg.addEventListener('click', function (e) { e.stopPropagation(); show(seg); });
   });
   document.addEventListener('click', hide);
+})();
+</script>
+
+<script>
+(function () {
+  var sel = document.getElementById('ort-select');
+  var num = document.querySelector('.weather-number');
+  var sub = document.querySelector('.weather-sub');
+  if (!sel || !num || !sub) return;
+
+  var basis = { wert: sel.options[0].value, num: num.textContent, sub: sub.textContent };
+
+  var WMO = {0:'Klar',1:'\u00dcberwiegend klar',2:'Teils bew\u00f6lkt',3:'Bedeckt',
+    45:'Nebel',48:'Reifnebel',
+    51:'Leichter Nieselregen',53:'Nieselregen',55:'Starker Nieselregen',
+    56:'Gefrierender Niesel',57:'Gefrierender Niesel',
+    61:'Leichter Regen',63:'Regen',65:'Starker Regen',
+    66:'Gefrierender Regen',67:'Gefrierender Regen',
+    71:'Leichter Schneefall',73:'Schneefall',75:'Starker Schneefall',77:'Schneegriesel',
+    80:'Leichte Schauer',81:'Schauer',82:'Kr\u00e4ftige Schauer',
+    85:'Schneeschauer',86:'Starke Schneeschauer',
+    95:'Gewitter',96:'Gewitter mit Hagel',99:'Gewitter mit Hagel'};
+
+  try {
+    var gemerkt = localStorage.getItem('mb-ort');
+    if (gemerkt) {
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === gemerkt) { sel.selectedIndex = i; break; }
+      }
+    }
+  } catch (e) {}
+
+  function laden() {
+    var teile = sel.value.split(',');
+    var ort = sel.options[sel.selectedIndex].textContent;
+    num.textContent = '\u2026';
+    num.classList.add('laedt');
+    sub.textContent = 'Vorhersage f\u00fcr ' + ort + ' wird geladen';
+
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + teile[0] +
+              '&longitude=' + teile[1] +
+              '&daily=temperature_2m_max,weather_code,precipitation_probability_max' +
+              '&forecast_days=1&timezone=Europe%2FBerlin';
+
+    fetch(url).then(function (r) {
+      if (!r.ok) throw new Error('http');
+      return r.json();
+    }).then(function (d) {
+      var t = Math.round(d.daily.temperature_2m_max[0]);
+      var c = d.daily.weather_code[0];
+      var p = d.daily.precipitation_probability_max[0];
+      num.classList.remove('laedt');
+      num.textContent = t + '\u00b0';
+      var s = (WMO[c] || 'Wetterlage unklar') + ', bis ' + t + '\u00b0C';
+      if (p !== null && p !== undefined) s += ', ' + p + '% Regenwahrscheinlichkeit';
+      sub.textContent = s;
+    }).catch(function () {
+      num.classList.remove('laedt');
+      if (sel.value === basis.wert) {
+        num.textContent = basis.num;
+        sub.textContent = basis.sub;
+      } else {
+        num.textContent = '\u2013';
+        sub.textContent = 'Wetterdaten f\u00fcr ' + ort + ' gerade nicht abrufbar';
+      }
+    });
+  }
+
+  sel.addEventListener('change', function () {
+    try { localStorage.setItem('mb-ort', sel.value); } catch (e) {}
+    laden();
+  });
+
+  laden();
 })();
 </script>
 
