@@ -173,6 +173,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
           <option value="48.1374,11.5755">München</option>
           <option value="47.8095,13.0550">Salzburg</option>
           <option value="47.3339,13.2989">Wagrain</option>
+          <option value="52.1065,-119.3050">Blue River</option>
         </select>
       </div>
       <div class="weather-number">9°</div>
@@ -309,20 +310,47 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
   var sub = document.querySelector('.weather-sub');
   if (!sel || !num || !sub) return;
 
+  // Orte: "wert" ist der Wert im Dropdown (und in localStorage['mb-ort']).
+  // lat/lon/hoehe überschreiben die Abfrage (z. B. Bergwetter), tz für Orte außerhalb Europas.
+  var ORTE = [
+    { name: 'Berlin',     wert: '52.5200,13.4050' },
+    { name: 'Badingen',   wert: '52.9977,13.2513' },
+    { name: 'München',    wert: '48.1374,11.5755' },
+    { name: 'Salzburg',   wert: '47.8095,13.0550' },
+    { name: 'Wagrain',    wert: '47.3339,13.2989', lat: '47.3186', lon: '13.3507', hoehe: 1991, zusatz: 'Bergwetter Grießenkareck, 1991 m' },
+    { name: 'Blue River', wert: '52.1065,-119.3050', tz: 'auto' }
+  ];
+  ORTE.forEach(function (o) {
+    for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === o.wert) return; }
+    var opt = document.createElement('option');
+    opt.value = o.wert;
+    opt.textContent = o.name;
+    sel.appendChild(opt);
+  });
+  function ortDaten(wert) {
+    for (var i = 0; i < ORTE.length; i++) { if (ORTE[i].wert === wert) return ORTE[i]; }
+    var t = wert.split(',');
+    return { wert: wert, lat: t[0], lon: t[1] };
+  }
+
   var basis = { wert: sel.options[0].value, num: num.textContent, sub: sub.textContent };
 
   var N = '#251E61', P = '#FF3A6B';
   var WOLKE = 'M15 33h19a7 7 0 0 0 .6-14 10 10 0 0 0-19.2 2.6A5.8 5.8 0 0 0 15 33z';
   var WOLKE_HOCH = 'M15 27h19a7 7 0 0 0 .6-14 10 10 0 0 0-19.2 2.6A5.8 5.8 0 0 0 15 27z';
+  var WOLKE_VORN = 'M18 38h17a7 7 0 0 0 .6-14 10 10 0 0 0-19.2 2.6A5.8 5.8 0 0 0 18 38z';
   function w(d) { return '<path d="' + d + '" stroke="' + N + '" stroke-width="2.5" stroke-linejoin="round" fill="none"/>'; }
   function l(x1, y1, x2, y2, c) { return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + (c || P) + '" stroke-width="2.5" stroke-linecap="round"/>'; }
   var ICONS = {
     sonne: '<circle cx="24" cy="24" r="8" stroke="' + P + '" stroke-width="2.5" fill="none"/>' +
       l(24,5,24,10) + l(24,38,24,43) + l(5,24,10,24) + l(38,24,43,24) +
       l(10.6,10.6,14.1,14.1) + l(33.9,33.9,37.4,37.4) + l(10.6,37.4,14.1,33.9) + l(33.9,14.1,37.4,10.6),
+    mond: '<path d="M29 8a16 16 0 1 0 11 25A13 13 0 0 1 29 8z" stroke="' + P + '" stroke-width="2.5" stroke-linejoin="round" fill="none"/>',
     teils: '<circle cx="17" cy="16" r="6" stroke="' + P + '" stroke-width="2.5" fill="none"/>' +
       l(17,4,17,6.5) + l(5,16,7.5,16) + l(8.5,7.5,10.3,9.3) + l(25.5,7.5,23.7,9.3) +
-      '<path d="M18 38h17a7 7 0 0 0 .6-14 10 10 0 0 0-19.2 2.6A5.8 5.8 0 0 0 18 38z" stroke="' + N + '" stroke-width="2.5" stroke-linejoin="round" fill="#FFFFFF"/>',
+      '<path d="' + WOLKE_VORN + '" stroke="' + N + '" stroke-width="2.5" stroke-linejoin="round" fill="#FFFFFF"/>',
+    teilsNacht: '<path d="M17 7a9 9 0 1 0 8 13A7.5 7.5 0 0 1 17 7z" stroke="' + P + '" stroke-width="2.5" stroke-linejoin="round" fill="none"/>' +
+      '<path d="' + WOLKE_VORN + '" stroke="' + N + '" stroke-width="2.5" stroke-linejoin="round" fill="#FFFFFF"/>',
     wolke: w(WOLKE),
     regen: w(WOLKE_HOCH) + l(17,32,15,38) + l(24,32,22,38) + l(31,32,29,38) + l(20.5,40,19.5,43) + l(27.5,40,26.5,43),
     schnee: l(24,6,24,42) + l(8.4,15,39.6,33) + l(8.4,33,39.6,15) +
@@ -332,9 +360,10 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
     gewitter: w(WOLKE_HOCH) + '<path d="M26 29l-5 8h6l-4 8" stroke="' + P + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
     nebel: w(WOLKE_HOCH) + l(11,33,37,33) + l(15,39,33,39)
   };
-  function artAusCode(c) {
-    if (c === 0 || c === 1) return 'sonne';
-    if (c === 2) return 'teils';
+  var NAMEN = {sonne:'Sonnig', mond:'Klare Nacht', teils:'Teils bewölkt', teilsNacht:'Teils bewölkt', wolke:'Bewölkt', regen:'Regen', schnee:'Schnee', gewitter:'Gewitter', nebel:'Nebel'};
+  function artAusCode(c, tag) {
+    if (c === 0 || c === 1) return tag === 0 ? 'mond' : 'sonne';
+    if (c === 2) return tag === 0 ? 'teilsNacht' : 'teils';
     if (c === 3) return 'wolke';
     if (c === 45 || c === 48) return 'nebel';
     if (c >= 95) return 'gewitter';
@@ -369,7 +398,6 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
     icon.setAttribute('role', 'img');
     zeile.insertBefore(icon, num);
   }
-  var NAMEN = {sonne:'Sonnig', teils:'Teils bewölkt', wolke:'Bewölkt', regen:'Regen', schnee:'Schnee', gewitter:'Gewitter', nebel:'Nebel'};
   function zeigeIcon(art) {
     icon.innerHTML = ICONS[art];
     icon.setAttribute('aria-label', NAMEN[art]);
@@ -398,32 +426,41 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
   } catch (e) {}
 
   function laden() {
-    var teile = sel.value.split(',');
+    var o = ortDaten(sel.value);
+    var t0 = sel.value.split(',');
     var ort = sel.options[sel.selectedIndex].textContent;
     num.textContent = '…';
     num.classList.add('laedt');
     icon.classList.add('laedt');
-    sub.textContent = 'Vorhersage für ' + ort + ' wird geladen';
+    sub.textContent = 'Wetter für ' + ort + ' wird geladen';
 
-    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + teile[0] +
-              '&longitude=' + teile[1] +
-              '&daily=temperature_2m_max,weather_code,precipitation_probability_max' +
-              '&forecast_days=1&timezone=Europe%2FBerlin';
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + (o.lat || t0[0]) +
+              '&longitude=' + (o.lon || t0[1]) +
+              (o.hoehe ? '&elevation=' + o.hoehe : '') +
+              '&current=temperature_2m,weather_code,is_day' +
+              '&daily=temperature_2m_max,precipitation_probability_max' +
+              '&forecast_days=1&timezone=' + (o.tz ? o.tz : 'Europe%2FBerlin');
+    var anfrage = sel.value;
 
     fetch(url).then(function (r) {
       if (!r.ok) throw new Error('http');
       return r.json();
     }).then(function (d) {
-      var t = Math.round(d.daily.temperature_2m_max[0]);
-      var c = d.daily.weather_code[0];
+      if (sel.value !== anfrage) return;
+      var jetzt = Math.round(d.current.temperature_2m);
+      var c = d.current.weather_code;
+      var max = Math.round(d.daily.temperature_2m_max[0]);
       var p = d.daily.precipitation_probability_max[0];
       num.classList.remove('laedt');
-      num.textContent = t + '°';
-      zeigeIcon(artAusCode(c));
-      var s = (WMO[c] || 'Wetterlage unklar') + ', bis ' + t + '°C';
-      if (p !== null && p !== undefined) s += ', ' + p + '% Regenwahrscheinlichkeit';
+      num.textContent = jetzt + '°';
+      zeigeIcon(artAusCode(c, d.current.is_day));
+      var s = 'Jetzt: ' + (WMO[c] || 'Wetterlage unklar') + ' · heute bis ' + max + '°C';
+      if (p !== null && p !== undefined) s += ', Niederschlagsrisiko ' + p + ' %';
+      if (o.tz && d.current.time) s += ' · Ortszeit ' + d.current.time.slice(11, 16) + ' Uhr';
+      if (o.zusatz) s = o.zusatz + ' · ' + s;
       sub.textContent = s;
     }).catch(function () {
+      if (sel.value !== anfrage) return;
       num.classList.remove('laedt');
       if (sel.value === basis.wert) {
         num.textContent = basis.num;
