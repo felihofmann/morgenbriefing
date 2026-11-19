@@ -70,6 +70,10 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 .ort-select:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
 .ort-select option{color:var(--primary);text-transform:none;letter-spacing:normal;}
 .weather-number.laedt{color:var(--ink-muted);}
+.weather-main{display:flex;align-items:center;gap:12px;margin:2px 0 6px 0;}
+.weather-main .weather-number{margin:0;}
+.weather-icon{width:40px;height:40px;flex-shrink:0;display:block;}
+.weather-icon.laedt{opacity:.35;}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
 .tile{border-radius:20px;padding:24px 26px;background:#FFFFFF;}
 .tile-pink{border:1.5px solid var(--accent);}
@@ -307,6 +311,72 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 
   var basis = { wert: sel.options[0].value, num: num.textContent, sub: sub.textContent };
 
+  var N = '#251E61', P = '#FF3A6B';
+  var WOLKE = 'M15 33h19a7 7 0 0 0 .6-14 10 10 0 0 0-19.2 2.6A5.8 5.8 0 0 0 15 33z';
+  var WOLKE_HOCH = 'M15 27h19a7 7 0 0 0 .6-14 10 10 0 0 0-19.2 2.6A5.8 5.8 0 0 0 15 27z';
+  function w(d) { return '<path d="' + d + '" stroke="' + N + '" stroke-width="2.5" stroke-linejoin="round" fill="none"/>'; }
+  function l(x1, y1, x2, y2, c) { return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + (c || P) + '" stroke-width="2.5" stroke-linecap="round"/>'; }
+  var ICONS = {
+    sonne: '<circle cx="24" cy="24" r="8" stroke="' + P + '" stroke-width="2.5" fill="none"/>' +
+      l(24,5,24,10) + l(24,38,24,43) + l(5,24,10,24) + l(38,24,43,24) +
+      l(10.6,10.6,14.1,14.1) + l(33.9,33.9,37.4,37.4) + l(10.6,37.4,14.1,33.9) + l(33.9,14.1,37.4,10.6),
+    teils: '<circle cx="17" cy="16" r="6" stroke="' + P + '" stroke-width="2.5" fill="none"/>' +
+      l(17,4,17,6.5) + l(5,16,7.5,16) + l(8.5,7.5,10.3,9.3) + l(25.5,7.5,23.7,9.3) +
+      '<path d="M18 38h17a7 7 0 0 0 .6-14 10 10 0 0 0-19.2 2.6A5.8 5.8 0 0 0 18 38z" stroke="' + N + '" stroke-width="2.5" stroke-linejoin="round" fill="#FFFFFF"/>',
+    wolke: w(WOLKE),
+    regen: w(WOLKE_HOCH) + l(17,32,15,38) + l(24,32,22,38) + l(31,32,29,38) + l(20.5,40,19.5,43) + l(27.5,40,26.5,43),
+    schnee: l(24,6,24,42) + l(8.4,15,39.6,33) + l(8.4,33,39.6,15) +
+      l(20,8.5,24,12.5) + l(28,8.5,24,12.5) + l(20,39.5,24,35.5) + l(28,39.5,24,35.5) +
+      l(9.5,20.5,14.5,19) + l(12.5,12,14.5,19) + l(38.5,27.5,33.5,29) + l(35.5,36,33.5,29) +
+      l(9.5,27.5,14.5,29) + l(12.5,36,14.5,29) + l(38.5,20.5,33.5,19) + l(35.5,12,33.5,19),
+    gewitter: w(WOLKE_HOCH) + '<path d="M26 29l-5 8h6l-4 8" stroke="' + P + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
+    nebel: w(WOLKE_HOCH) + l(11,33,37,33) + l(15,39,33,39)
+  };
+  function artAusCode(c) {
+    if (c === 0 || c === 1) return 'sonne';
+    if (c === 2) return 'teils';
+    if (c === 3) return 'wolke';
+    if (c === 45 || c === 48) return 'nebel';
+    if (c >= 95) return 'gewitter';
+    if ((c >= 71 && c <= 77) || c === 85 || c === 86) return 'schnee';
+    if ((c >= 51 && c <= 67) || (c >= 80 && c <= 82)) return 'regen';
+    return 'wolke';
+  }
+  function artAusText(t) {
+    t = (t || '').toLowerCase();
+    if (/gewitter/.test(t)) return 'gewitter';
+    if (/schnee|flocke/.test(t)) return 'schnee';
+    if (/regen|schauer|niesel/.test(t)) return 'regen';
+    if (/nebel|dunst/.test(t)) return 'nebel';
+    if (/teils|heiter|wechselnd|aufgelockert|sonne und wolken/.test(t)) return 'teils';
+    if (/bewölkt|wolkig|bedeckt|grau/.test(t)) return 'wolke';
+    if (/sonn|klar/.test(t)) return 'sonne';
+    return 'wolke';
+  }
+  var zeile = num.parentNode.classList.contains('weather-main') ? num.parentNode : null;
+  if (!zeile) {
+    zeile = document.createElement('div');
+    zeile.className = 'weather-main';
+    num.parentNode.insertBefore(zeile, num);
+    zeile.appendChild(num);
+  }
+  var icon = zeile.querySelector('.weather-icon');
+  if (!icon) {
+    icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('class', 'weather-icon');
+    icon.setAttribute('viewBox', '0 0 48 48');
+    icon.setAttribute('fill', 'none');
+    icon.setAttribute('role', 'img');
+    zeile.insertBefore(icon, num);
+  }
+  var NAMEN = {sonne:'Sonnig', teils:'Teils bewölkt', wolke:'Bewölkt', regen:'Regen', schnee:'Schnee', gewitter:'Gewitter', nebel:'Nebel'};
+  function zeigeIcon(art) {
+    icon.innerHTML = ICONS[art];
+    icon.setAttribute('aria-label', NAMEN[art]);
+    icon.classList.remove('laedt');
+  }
+  zeigeIcon(artAusText(basis.sub));
+
   var WMO = {0:'Klar',1:'Überwiegend klar',2:'Teils bewölkt',3:'Bedeckt',
     45:'Nebel',48:'Reifnebel',
     51:'Leichter Nieselregen',53:'Nieselregen',55:'Starker Nieselregen',
@@ -332,6 +402,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
     var ort = sel.options[sel.selectedIndex].textContent;
     num.textContent = '…';
     num.classList.add('laedt');
+    icon.classList.add('laedt');
     sub.textContent = 'Vorhersage für ' + ort + ' wird geladen';
 
     var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + teile[0] +
@@ -348,6 +419,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
       var p = d.daily.precipitation_probability_max[0];
       num.classList.remove('laedt');
       num.textContent = t + '°';
+      zeigeIcon(artAusCode(c));
       var s = (WMO[c] || 'Wetterlage unklar') + ', bis ' + t + '°C';
       if (p !== null && p !== undefined) s += ', ' + p + '% Regenwahrscheinlichkeit';
       sub.textContent = s;
@@ -356,8 +428,11 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
       if (sel.value === basis.wert) {
         num.textContent = basis.num;
         sub.textContent = basis.sub;
+        zeigeIcon(artAusText(basis.sub));
       } else {
         num.textContent = '–';
+        icon.innerHTML = '';
+        icon.classList.remove('laedt');
         sub.textContent = 'Wetterdaten für ' + ort + ' gerade nicht abrufbar';
       }
     });
