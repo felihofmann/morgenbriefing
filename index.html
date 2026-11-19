@@ -31,7 +31,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
 .day-date{font-family:'Cal Sans',-apple-system,sans-serif;font-size:14px;color:var(--ink-muted);margin:0;}
 .cam-tile{border-radius:20px;overflow:hidden;margin-bottom:16px;background:var(--primary);aspect-ratio:16/9;}
 .cam-tile[hidden]{display:none;}
-.cam-tile video{display:block;width:100%;height:100%;object-fit:cover;}
+.cam-tile iframe{display:block;width:100%;height:100%;border:0;}
 .quote-tile{background:var(--primary);border-radius:20px;padding:32px 36px;margin-bottom:16px;}
 .quote-mark{font-family:'Cal Sans',-apple-system,sans-serif;color:var(--accent);font-size:40px;line-height:1;margin:0 0 6px 0;}
 .quote-text{font-family:'Abhaya Libre',Georgia,serif;font-weight:500;color:#FFFFFF;font-size:21px;line-height:1.5;margin:0 0 14px 0;}
@@ -119,7 +119,7 @@ body{margin:0;background:var(--bg);font-family:'Abhaya Libre',Georgia,serif;colo
   </div>
 
   <div class="cam-tile">
-    <video src="https://stsfc001.feratel.com/streams/latest/1/5216.mp4?dcsdesign=WTP_feratel.com" autoplay muted loop playsinline preload="auto" aria-label="Webcam Flachau Bergstation Achterjet" onerror="this.parentNode.hidden=true;document.querySelector('.quote-tile').hidden=false"></video>
+    <iframe src="https://webtvfc.feratel.com/webtv/?design=v5&amp;pg=DA7D2F22-8600-464D-9D4F-CDB04014A6C5&amp;cam=5216&amp;lg=de&amp;sound=muted" title="Webcam Flachau Bergstation Achterjet" allow="autoplay; fullscreen" loading="lazy"></iframe>
   </div>
 
   <div class="quote-tile" hidden>
